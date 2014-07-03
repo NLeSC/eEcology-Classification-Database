@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="default">
+		<provider>
+           org.eclipse.persistence.jpa.PersistenceProvider
+        </provider>
+		<class>nl.esciencecenter.eecology.classification.database.model.Classification</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.ClassificationPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.Classifier</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.ClassifierType</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.Collection</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.CollectionGroup</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.Feature</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.FeatureValue</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.FeatureValuePK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.Job</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.JobSelection</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.JobSelectionPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.Label</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.LabelPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.LabelRemap</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.LabelRemapPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.LabelSchema</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.Segment</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.SegmentAcceleration</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.Segmentator</class>		
+	</persistence-unit>
+</persistence>
