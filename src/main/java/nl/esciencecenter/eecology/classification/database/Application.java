@@ -11,7 +11,14 @@ import nl.esciencecenter.eecology.classification.database.model.Segmentator;
 
 public class Application {
 
-    /**
+    /*-
+     * argument example: 
+     * 
+     *   org.postgresql.Driver
+     *   jdbc:postgresql://db.e-ecology.sara.nl/eecology?sslfactory=org.postgresql.ssl.NonValidatingFactory&ssl=true 
+     *   username
+     *   password
+     * 
      * @param args
      */
     public static void main(String[] args) {
