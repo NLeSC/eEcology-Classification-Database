@@ -6,25 +6,54 @@
 		<provider>
            org.eclipse.persistence.jpa.PersistenceProvider
         </provider>
-		<class>nl.esciencecenter.eecology.classification.database.model.Classification</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.ClassificationPK</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.Classifier</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.ClassifierType</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.Collection</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.CollectionGroup</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.Feature</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.FeatureValue</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.FeatureValuePK</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.Job</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.JobSelection</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.JobSelectionPK</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.Label</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.LabelPK</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.LabelRemap</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.LabelRemapPK</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.LabelSchema</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.Segment</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.SegmentAcceleration</class>
-		<class>nl.esciencecenter.eecology.classification.database.model.Segmentator</class>		
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.Classification</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.ClassificationPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.Classifier</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.ClassifierType</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.Collection</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.CollectionGroup</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.Feature</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.FeatureValue</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.FeatureValuePK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.Job</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.JobSelection</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.JobSelectionPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.Label</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.LabelPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.LabelRemap</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.LabelRemapPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.LabelSchema</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.Segment</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.SegmentAcceleration</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.classification.Segmentator</class>
+		
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.AccelerationStart</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.AccelerationStartPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.Acceleration</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.AccelerationPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.AccessDevice</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.AccessDevicePK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.AccessIndividual</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.AccessIndividualPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.Communication</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.CommunicationPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.Device</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.Energy</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.EnergyPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.Individual</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.Nest</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.NestPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.Settings</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.SettingsPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.TrackSession</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.TrackSessionPK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.TrackingData101</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.TrackingData101PK</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.TrackingSpeed</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.TrackingSpeed3d</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.TrackingfileMessage</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.TrackingfileParsing</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.Warning</class>
+		<class>nl.esciencecenter.eecology.classification.database.model.gps.WarningPK</class>		
 	</persistence-unit>
 </persistence>

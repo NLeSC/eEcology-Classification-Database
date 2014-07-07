@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import nl.esciencecenter.eecology.classification.database.model.Segmentator;
+import nl.esciencecenter.eecology.classification.database.model.classification.Segmentator;
 
 public class Application {
 
