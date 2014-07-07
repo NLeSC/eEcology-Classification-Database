@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class Classifier implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "CLASSIFIER_CLASSIFIERID_GENERATOR", sequenceName = "CLASSIFICATION.CLASSIFIER_CLASSIFIER_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "CLASSIFIER_CLASSIFIERID_GENERATOR", sequenceName = "CLASSIFIER_CLASSIFIER_ID_SEQ", allocationSize = 1, schema = "CLASSIFICATION")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLASSIFIER_CLASSIFIERID_GENERATOR")
     @Column(name = "classifier_id")
     private Integer classifierId;
@@ -54,7 +55,7 @@ public class Classifier implements Serializable {
     private Set<Classifier> children;
 
     //bi-directional many-to-one association to ClassifierType
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "class_type_id")
     private ClassifierType classifierType;
 
@@ -64,7 +65,7 @@ public class Classifier implements Serializable {
     private Collection collection;
 
     //bi-directional many-to-one association to LabelSchema
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "label_schema_id")
     private LabelSchema labelSchema;
 
@@ -74,7 +75,7 @@ public class Classifier implements Serializable {
     private Segmentator segmentator;
 
     //bi-directional many-to-many association to Feature
-    @ManyToMany(mappedBy = "classifiers")
+    @ManyToMany(mappedBy = "classifiers", cascade = CascadeType.PERSIST)
     private Set<Feature> features;
 
     //bi-directional many-to-one association to Job

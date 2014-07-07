@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class LabelSchema implements Serializable {
     private Set<Classifier> classifiers;
 
     //bi-directional many-to-one association to Label
-    @OneToMany(mappedBy = "labelSchema")
+    @OneToMany(mappedBy = "labelSchema", cascade = CascadeType.PERSIST)
     private Set<Label> labels;
 
     public LabelSchema() {

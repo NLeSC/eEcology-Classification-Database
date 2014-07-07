@@ -36,6 +36,10 @@ public class ClassifierType implements Serializable {
     public ClassifierType() {
     }
 
+    public ClassifierType(String name) {
+        this.name = name;
+    }
+
     public Integer getClassTypeId() {
         return classTypeId;
     }

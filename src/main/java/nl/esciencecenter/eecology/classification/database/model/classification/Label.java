@@ -53,6 +53,15 @@ public class Label implements Serializable {
     public Label() {
     }
 
+    public Label(String name, int id, String description, int red, int green, int blue, LabelSchema labelSchema) {
+        this.name = name;
+        this.id = new LabelPK(id);
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+        setLabelSchema(labelSchema);
+    }
+
     public LabelPK getId() {
         return id;
     }
