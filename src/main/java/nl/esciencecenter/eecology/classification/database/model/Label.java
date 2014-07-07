@@ -9,12 +9,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the label database table.
  * 
  */
 @Entity
+@Table(schema = "classification")
 public class Label implements Serializable {
     private static final long serialVersionUID = 1L;
 

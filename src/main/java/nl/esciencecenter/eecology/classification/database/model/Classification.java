@@ -10,12 +10,14 @@ import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the classification database table.
  * 
  */
 @Entity
+@Table(schema = "classification")
 public class Classification implements Serializable {
     private static final long serialVersionUID = 1L;
 

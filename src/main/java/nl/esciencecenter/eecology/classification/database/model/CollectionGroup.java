@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "collection_group")
+@Table(schema = "classification", name = "collection_group")
 public class CollectionGroup implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "feature_value")
+@Table(schema = "classification", name = "feature_value")
 public class FeatureValue implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -11,12 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the segment database table.
  * 
  */
 @Entity
+@Table(schema = "classification")
 public class Segment implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "job_selection")
+@Table(schema = "classification", name = "job_selection")
 public class JobSelection implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "classifier_type")
+@Table(schema = "classification", name = "classifier_type")
 public class ClassifierType implements Serializable {
     private static final long serialVersionUID = 1L;
 
