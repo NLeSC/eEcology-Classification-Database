@@ -163,10 +163,10 @@ CREATE TABLE classification.job
 	job_id serial NOT NULL,
 	classifier_id int NOT NULL,
 	parent_job_id int,
-	is_public boolean,
+	is_public boolean NOT NULL DEFAULT FALSE,
 	created_on timestamp NOT NULL,
 	created_by varchar(100) NOT NULL,
-	id bigint NOT NULL,
+	project_id bigint NOT NULL,
 	PRIMARY KEY (job_id)
 ) WITHOUT OIDS;
 
@@ -410,7 +410,7 @@ ALTER TABLE classification.acceleration
 
 /* Enable when migration is complete
 ALTER TABLE classification.job
-	ADD FOREIGN KEY (id)
+	ADD FOREIGN KEY (project_id)
 	REFERENCES admin.ee_project (id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
