@@ -61,17 +61,10 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>nl.esciencecenter.eecology.classification</groupId>
-			<artifactId>classification</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.7</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.3.5.Final</version>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -79,4 +72,14 @@
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.0</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -3,5 +3,6 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.next
 release.properties
-src/test/resources/hibernate.cfg.xml
 .project
+/target/
+src/main/resources/generatorConfig.xml

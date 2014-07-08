@@ -1,12 +1,21 @@
 package nl.esciencecenter.eecology.classification.db;
 
-import java.io.Serializable;
+import java.util.Properties;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
+import javax.sql.DataSource;
+
+import nl.esciencecenter.eecology.classification.db.doa.classification.SegmentatorMapper;
+import nl.esciencecenter.eecology.classification.db.model.classification.Segmentator;
+
+import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.transaction.TransactionFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+
 
 public class Application {
     public static void main(String[] args) {
@@ -14,24 +23,28 @@ public class Application {
         new Application().run();
     }
 
-    private SessionFactory sessionFactory;
 
     private void run() {
         setUp();
     }
 
     private void setUp() {
-        Configuration configuration = new Configuration();
-        configuration.configure();
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties())
-                .build();
-        sessionFactory = new Configuration().configure().buildSessionFactory(serviceRegistry);
-        Session session = sessionFactory.getCurrentSession();
-        Segmentor segmentor = new Segmentor();
-        segmentor.setDescription("test description");
-        segmentor.setName("new name");
-        session.saveOrUpdate(segmentor);
-        Serializable id = 1;
-        Segmentor segmentor2 = (Segmentor) session.get(segmentor.getClass(), id);
+    	Properties driverProperties = new Properties();
+    	driverProperties.setProperty("username", "stefan_verhoeven");
+    	driverProperties.setProperty("password", "stefan_verhoeven");
+    	DataSource dataSource = new PooledDataSource("org.postgresql.Driver", "jdbc:postgresql://db.e-ecology.sara.nl/eecology?sslfactory=org.postgresql.ssl.NonValidatingFactory&ssl=true", driverProperties);
+    	TransactionFactory transactionFactory = new JdbcTransactionFactory();
+    	Environment environment = new Environment("development", transactionFactory, dataSource);
+    	Configuration configuration = new Configuration(environment);
+    	configuration.addMappers("nl.esciencecenter.eecology.classification.db.doa.classification");
+    	SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
+    	
+    	SqlSession session = sqlSessionFactory.openSession();
+    	
+    	SegmentatorMapper mapper = session.getMapper(SegmentatorMapper.class);
+    	Segmentator record = new Segmentator();
+    	record.setName("somename");
+    	mapper.insert(record);
+    	
     }
 }
