@@ -14,11 +14,11 @@ DROP TABLE IF EXISTS classification.collection_group;
 DROP TABLE IF EXISTS classification.label_remap;
 DROP TABLE IF EXISTS classification.label;
 DROP TABLE IF EXISTS classification.label_schema;
-DROP TABLE IF EXISTS classification.segment_acceleration;
+DROP TABLE IF EXISTS classification.acceleration;
+DROP TABLE IF EXISTS classification.recording;
 DROP TABLE IF EXISTS classification.segment;
-DROP TABLE IF EXISTS classification.segmentator;
+DROP TABLE IF EXISTS classification.segmenter;
 DROP TABLE IF EXISTS classification.classifier_type;
-
 
 
 
@@ -72,9 +72,7 @@ CREATE TABLE classification.label_schema
 CREATE TABLE classification.segment
 (
 	segment_id serial NOT NULL,
-	device_info_serial int NOT NULL,
-	date_time timestamp NOT NULL,
-	segmentator_id int NOT NULL,
+	segmenter_id int NOT NULL,
 	PRIMARY KEY (segment_id)
 ) WITHOUT OIDS;
 
@@ -99,14 +97,13 @@ CREATE TABLE classification.collection
 ) WITHOUT OIDS;
 
 
-CREATE TABLE classification.segment_acceleration
+CREATE TABLE classification.acceleration
 (
-	segment_acceleration_id serial NOT NULL,
 	segment_id int NOT NULL,
-	device_info_serial int NOT NULL,
 	date_time timestamp NOT NULL,
+	device_info_serial int NOT NULL,
 	index smallint NOT NULL,
-	PRIMARY KEY (segment_acceleration_id)
+	PRIMARY KEY (segment_id, date_time, device_info_serial, index)
 ) WITHOUT OIDS;
 
 
@@ -152,12 +149,12 @@ CREATE TABLE classification.label
 ) WITHOUT OIDS;
 
 
-CREATE TABLE classification.segmentator
+CREATE TABLE classification.segmenter
 (
-	segmentator_id serial NOT NULL,
+	segmenter_id serial NOT NULL,
 	name varchar(255) NOT NULL UNIQUE,
 	configuration text,
-	PRIMARY KEY (segmentator_id)
+	PRIMARY KEY (segmenter_id)
 ) WITHOUT OIDS;
 
 
@@ -165,9 +162,11 @@ CREATE TABLE classification.job
 (
 	job_id serial NOT NULL,
 	classifier_id int NOT NULL,
+	parent_job_id int,
+	is_public boolean,
 	created_on timestamp NOT NULL,
 	created_by varchar(100) NOT NULL,
-	parent_job_id int,
+	id bigint NOT NULL,
 	PRIMARY KEY (job_id)
 ) WITHOUT OIDS;
 
@@ -187,7 +186,7 @@ CREATE TABLE classification.classifier
 	name varchar(255) NOT NULL,
 	class_type_id int NOT NULL,
 	label_schema_id int NOT NULL,
-	segmentator_id int NOT NULL,
+	segmenter_id int NOT NULL,
 	training_set_id int,
 	parent_classifier_id int,
 	weka_object bytea,
@@ -208,6 +207,13 @@ CREATE TABLE classification.job_selection
 ) WITHOUT OIDS;
 
 
+CREATE TABLE classification.recording
+(
+	segment_id int NOT NULL,
+	date_time timestamp NOT NULL,
+	device_info_serial int NOT NULL,
+	PRIMARY KEY (segment_id, date_time, device_info_serial)
+) WITHOUT OIDS;
 
 /* Create Foreign Keys */
 
@@ -259,7 +265,7 @@ ALTER TABLE classification.feature_value
 ;
 
 
-ALTER TABLE classification.segment_acceleration
+ALTER TABLE classification.classification
 	ADD FOREIGN KEY (segment_id)
 	REFERENCES classification.segment (segment_id)
 	ON UPDATE RESTRICT
@@ -267,7 +273,7 @@ ALTER TABLE classification.segment_acceleration
 ;
 
 
-ALTER TABLE classification.classification
+ALTER TABLE classification.recording
 	ADD FOREIGN KEY (segment_id)
 	REFERENCES classification.segment (segment_id)
 	ON UPDATE RESTRICT
@@ -324,16 +330,16 @@ ALTER TABLE classification.label_remap
 
 
 ALTER TABLE classification.classifier
-	ADD FOREIGN KEY (segmentator_id)
-	REFERENCES classification.segmentator (segmentator_id)
+	ADD FOREIGN KEY (segmenter_id)
+	REFERENCES classification.segmenter (segmenter_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE classification.segment
-	ADD FOREIGN KEY (segmentator_id)
-	REFERENCES classification.segmentator (segmentator_id)
+	ADD FOREIGN KEY (segmenter_id)
+	REFERENCES classification.segmenter (segmenter_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -394,6 +400,37 @@ ALTER TABLE classification.classifier
 	ON DELETE RESTRICT
 ;
 
+
+ALTER TABLE classification.acceleration
+	ADD FOREIGN KEY (segment_id, date_time, device_info_serial)
+	REFERENCES classification.recording (segment_id, date_time, device_info_serial)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+/* Enable when migration is complete
+ALTER TABLE classification.job
+	ADD FOREIGN KEY (id)
+	REFERENCES admin.ee_project (id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+*/
+
+ALTER TABLE classification.recording
+	ADD FOREIGN KEY (date_time, device_info_serial)
+	REFERENCES gps.uva_tracking_data101 (date_time, device_info_serial)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+/* Added foreign key manually, as ermaster doesnt allow it */
+ALTER TABLE classification.acceleration
+	ADD FOREIGN KEY (date_time, device_info_serial, index)
+	REFERENCES gps.uva_acceleration101 (date_time, device_info_serial, index)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
 
 
 /* Comments */
