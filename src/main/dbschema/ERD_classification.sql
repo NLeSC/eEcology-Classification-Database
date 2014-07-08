@@ -1,12 +1,12 @@
 
 /* Drop Tables */
 
-DROP TABLE IF EXISTS classification.feature_classifier;
 DROP TABLE IF EXISTS classification.feature_value;
+DROP TABLE IF EXISTS classification.feature_classifier;
 DROP TABLE IF EXISTS classification.feature;
 DROP TABLE IF EXISTS classification.classification_collection;
-DROP TABLE IF EXISTS classification.classification;
 DROP TABLE IF EXISTS classification.job_selection;
+DROP TABLE IF EXISTS classification.classification;
 DROP TABLE IF EXISTS classification.job;
 DROP TABLE IF EXISTS classification.classifier;
 DROP TABLE IF EXISTS classification.collection;
@@ -74,6 +74,7 @@ CREATE TABLE classification.segment
 	segment_id serial NOT NULL,
 	device_info_serial int NOT NULL,
 	date_time timestamp NOT NULL,
+	segmentator_id int NOT NULL,
 	PRIMARY KEY (segment_id)
 ) WITHOUT OIDS;
 
@@ -140,7 +141,7 @@ CREATE TABLE classification.label_remap
 
 CREATE TABLE classification.label
 (
-	label_id serial NOT NULL,
+	label_id int NOT NULL,
 	label_schema_id int NOT NULL,
 	name varchar(100) NOT NULL,
 	red smallint NOT NULL,
@@ -210,7 +211,7 @@ CREATE TABLE classification.job_selection
 
 /* Create Foreign Keys */
 
-ALTER TABLE classification.feature_classifier
+ALTER TABLE classification.feature_value
 	ADD FOREIGN KEY (feature_id)
 	REFERENCES classification.feature (feature_id)
 	ON UPDATE RESTRICT
@@ -218,7 +219,7 @@ ALTER TABLE classification.feature_classifier
 ;
 
 
-ALTER TABLE classification.feature_value
+ALTER TABLE classification.feature_classifier
 	ADD FOREIGN KEY (feature_id)
 	REFERENCES classification.feature (feature_id)
 	ON UPDATE RESTRICT
@@ -234,6 +235,14 @@ ALTER TABLE classification.collection
 ;
 
 
+ALTER TABLE classification.classifier
+	ADD FOREIGN KEY (label_schema_id)
+	REFERENCES classification.label_schema (label_schema_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE classification.label
 	ADD CONSTRAINT belongs FOREIGN KEY (label_schema_id)
 	REFERENCES classification.label_schema (label_schema_id)
@@ -242,9 +251,9 @@ ALTER TABLE classification.label
 ;
 
 
-ALTER TABLE classification.classifier
-	ADD FOREIGN KEY (label_schema_id)
-	REFERENCES classification.label_schema (label_schema_id)
+ALTER TABLE classification.feature_value
+	ADD FOREIGN KEY (segment_id)
+	REFERENCES classification.segment (segment_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -266,9 +275,9 @@ ALTER TABLE classification.classification
 ;
 
 
-ALTER TABLE classification.feature_value
-	ADD FOREIGN KEY (segment_id)
-	REFERENCES classification.segment (segment_id)
+ALTER TABLE classification.classification_collection
+	ADD FOREIGN KEY (collection_id)
+	REFERENCES classification.collection (collection_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -283,24 +292,8 @@ ALTER TABLE classification.classifier
 
 
 ALTER TABLE classification.classification_collection
-	ADD FOREIGN KEY (collection_id)
-	REFERENCES classification.collection (collection_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE classification.classification_collection
 	ADD FOREIGN KEY (job_id, segment_id)
 	REFERENCES classification.classification (job_id, segment_id)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
-;
-
-
-ALTER TABLE classification.label_remap
-	ADD FOREIGN KEY (source_label_id, source_label_schema_id)
-	REFERENCES classification.label (label_id, label_schema_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -322,6 +315,14 @@ ALTER TABLE classification.label_remap
 ;
 
 
+ALTER TABLE classification.label_remap
+	ADD FOREIGN KEY (source_label_id, source_label_schema_id)
+	REFERENCES classification.label (label_id, label_schema_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
 ALTER TABLE classification.classifier
 	ADD FOREIGN KEY (segmentator_id)
 	REFERENCES classification.segmentator (segmentator_id)
@@ -330,9 +331,9 @@ ALTER TABLE classification.classifier
 ;
 
 
-ALTER TABLE classification.classification
-	ADD FOREIGN KEY (job_id)
-	REFERENCES classification.job (job_id)
+ALTER TABLE classification.segment
+	ADD FOREIGN KEY (segmentator_id)
+	REFERENCES classification.segmentator (segmentator_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -354,17 +355,17 @@ ALTER TABLE classification.job
 ;
 
 
-ALTER TABLE classification.classifier
-	ADD FOREIGN KEY (class_type_id)
-	REFERENCES classification.classifier_type (class_type_id)
+ALTER TABLE classification.classification
+	ADD FOREIGN KEY (job_id)
+	REFERENCES classification.job (job_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
 ALTER TABLE classification.classifier
-	ADD FOREIGN KEY (parent_classifier_id)
-	REFERENCES classification.classifier (classifier_id)
+	ADD FOREIGN KEY (class_type_id)
+	REFERENCES classification.classifier_type (class_type_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -380,6 +381,14 @@ ALTER TABLE classification.job
 
 ALTER TABLE classification.feature_classifier
 	ADD FOREIGN KEY (classifier_id)
+	REFERENCES classification.classifier (classifier_id)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE classification.classifier
+	ADD FOREIGN KEY (parent_classifier_id)
 	REFERENCES classification.classifier (classifier_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
