@@ -91,12 +91,18 @@ public class Application {
     private static LabelSchema insertLabelSchema(EntityManager em) {
         LabelSchema labelSchema = new LabelSchema();
         labelSchema.setName("movement");
+
+        labelSchema.setCreatedBy("Chris");
+        labelSchema.setCreatedOn(new Timestamp(5000000));
+
+        em.getTransaction().begin();
+        em.persist(labelSchema);
+        em.getTransaction().commit();
+
         Set<Label> labels = new HashSet<Label>();
         labels.add(new Label("flying", 1, "the flying movement", 0, 127, 255, labelSchema));
         labels.add(new Label("sitting", 1, "sitting still", 255, 127, 255, labelSchema));
         labelSchema.setLabels(labels);
-        labelSchema.setCreatedBy("Chris");
-        labelSchema.setCreatedOn(new Timestamp(5000000));
 
         em.getTransaction().begin();
         em.persist(labelSchema);
